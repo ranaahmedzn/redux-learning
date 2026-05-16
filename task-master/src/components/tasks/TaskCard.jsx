@@ -5,7 +5,7 @@ import { removeTask, updateStatus } from '../../redux/features/tasks/TasksSlice'
 const TaskCard = ({task}) => {
   const dispatch = useDispatch();
 
-  const updatedStatus = task.status === 'pending' ? 'in_progress' : 'completed';
+  const updatedStatus = task.status === 'pending' ? 'in_progress' : task.status === 'in_progress' ? 'completed' : 'archive';
 
   return (
     <div className="bg-secondary/10 rounded-md p-5">

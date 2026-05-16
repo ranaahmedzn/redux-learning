@@ -8,7 +8,10 @@ import { useSelector } from 'react-redux';
 const Tasks = () => {
   const [isOpen, setIsOpen] = useState(false);
   const {tasks} = useSelector(state => state.tasksSlice);
-  console.log(tasks)
+
+  const pendingTasks = tasks.filter(task => task.status === 'pending');
+  const inProgressTasks = tasks.filter(task => task.status === 'in_progress');
+  const completedTasks = tasks.filter(task => task.status === 'completed');
 
   return (
     <div className="h-screen grid grid-cols-12">
@@ -40,11 +43,11 @@ const Tasks = () => {
             <div className="flex sticky top-0 justify-between bg-[#D3DDF9] p-5 rounded-md mb-3">
               <h1>Up Next</h1>
               <p className="bg-primary text-white w-6 h-6 grid place-content-center rounded-md">
-                0
+                {pendingTasks.length}
               </p>
             </div>
             <div className="space-y-3">
-              {tasks.filter(task => task.status === 'pending').map(task => (
+              {pendingTasks.map(task => (
                 <TaskCard key={task.id} task={task} />
               ))}
             </div>
@@ -53,11 +56,11 @@ const Tasks = () => {
             <div className="flex sticky top-0 justify-between bg-[#D3DDF9] p-5 rounded-md mb-3">
               <h1>In Progress</h1>
               <p className="bg-primary text-white w-6 h-6 grid place-content-center rounded-md">
-                0
+                {inProgressTasks.length}
               </p>
             </div>
             <div className="space-y-3">
-              {tasks.filter(task => task.status === 'in_progress').map(task => (
+              {inProgressTasks.map(task => (
                 <TaskCard key={task.id} task={task} />
               ))}
             </div>
@@ -66,11 +69,11 @@ const Tasks = () => {
             <div className="flex sticky top-0 justify-between bg-[#D3DDF9] p-5 rounded-md mb-3">
               <h1>Completed</h1>
               <p className="bg-primary text-white w-6 h-6 grid place-content-center rounded-md">
-                0
+                {completedTasks.length}
               </p>
             </div>
             <div className="space-y-3">
-              {tasks.filter(task => task.status === 'completed').map(task => (
+              {completedTasks.map(task => (
                 <TaskCard key={task.id} task={task} />
               ))}
             </div>
