@@ -2,12 +2,24 @@ import {
   CheckIcon,
   DocumentMagnifyingGlassIcon,
 } from '@heroicons/react/24/outline';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { updateStatus, selectMyTasks } from '../../redux/features/tasks/TasksSlice';
+import { useEffect, useState } from 'react';
+import Modal from '../ui/Modal';
 
 const MyTasks = () => {
-  const { user } = useSelector(state => state.userSlice);
   const { tasks } = useSelector(state => state.tasksSlice);
-  const myTasks = tasks.filter(task => task.assignTo === user.name);
+  const myTasks = useSelector(selectMyTasks);
+  const dispatch = useDispatch()
+  const [openedTaskId, setOpenedTaskId] = useState(null);
+
+  const [taskDetails, setTaskDetails] = useState({});
+
+  useEffect(() => {
+    if (openedTaskId) {
+      setTaskDetails(tasks.find(task => task.id === openedTaskId) || {});
+    }
+  }, [openedTaskId, tasks])
 
   return (
     <div>
@@ -20,16 +32,26 @@ const MyTasks = () => {
           >
             <h1>{task.title}</h1>
             <div className="flex gap-3">
-              <button className="grid place-content-center" title="Details">
+              <button onClick={() => setOpenedTaskId(task.id)} className="grid place-content-center" title="Details">
                 <DocumentMagnifyingGlassIcon className="w-5 h-5 text-primary" />
               </button>
-              <button className="grid place-content-center" title="Done">
+              <button onClick={() => dispatch(updateStatus({ id: task.id, status: 'completed' }))} className="grid place-content-center" title="Done">
                 <CheckIcon className="w-5 h-5 text-primary" />
               </button>
             </div>
           </div>
         ))}
       </div>
+
+      {/* task details modal */}
+      <Modal isOpen={openedTaskId !== null} setIsOpen={() => setOpenedTaskId(null)} title={taskDetails.title}>
+        <p>{taskDetails.description}</p>
+        <p className="my-3 text-sm">Assign To: {taskDetails.assignTo}</p>
+        <div className='flex justify-between items-center'>
+          <p>Status: {taskDetails.status}</p>
+          <p>{taskDetails.date}</p>
+        </div>
+      </Modal>
     </div>
   );
 };

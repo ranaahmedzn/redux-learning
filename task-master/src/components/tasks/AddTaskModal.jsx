@@ -42,8 +42,8 @@ const AddTaskModal = ({ isOpen, setIsOpen }) => {
           <input
             className="w-full rounded-md border-gray-300"
             type="date"
-            id="deadline"
-            {...register('deadline')}
+            id="date"
+            {...register('date')}
           />
         </div>
         <div className="flex flex-col mb-5">

@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, createSelector } from '@reduxjs/toolkit';
 
 const initialState = {
     tasks: [
@@ -44,5 +44,11 @@ const tasksSlice = createSlice({
 });
 
 export const { addTask, removeTask, updateStatus } = tasksSlice.actions;
+
+export const selectMyTasks = createSelector(
+    (state) => state.tasksSlice.tasks,
+    (state) => state.userSlice.user,
+    (tasks, user) => tasks.filter(task => task.assignTo === user?.name)
+);
 
 export default tasksSlice.reducer;
