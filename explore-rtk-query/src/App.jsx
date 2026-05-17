@@ -1,12 +1,16 @@
-function App() {
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Feed from "./pages/Feed";
+import PostDetails from "./pages/PostDetails";
 
+function App() {
   return (
-    <>
-      <div className="h-screen flex items-center justify-center">
-        <h2 className="text-3xl font-bold text-center text-gray-800">Hello RTK Query!</h2>
-      </div>
-    </>
-  )
+    <Router>
+      <Routes>
+        <Route path="/" element={<Feed />} />
+        <Route path="/post/:id" element={<PostDetails />} />
+      </Routes>
+    </Router>
+  );
 }
 
-export default App
+export default App;
