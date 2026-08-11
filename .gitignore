@@ -26,7 +26,6 @@ yarn-error.log*
 pnpm-debug.log*
 
 # local env files
-.env
 .env*.local
 .env.development.local
 .env.test.local
@@ -41,7 +40,6 @@ next-env.d.ts
 
 # editor directories and files
 .idea
-.vscode/*
 !.vscode/settings.json
 !.vscode/tasks.json
 !.vscode/launch.json
@@ -60,3 +58,4 @@ next-env.d.ts
 .Trashes
 ehthumbs.db
 Thumbs.db
+config.bat
